@@ -3,7 +3,6 @@ import path from "path";
 import fs from "fs/promises";
 
 export default function Product({ product }) {
-  console.log(product);
   return (
     <Fragment>
       <h2>
@@ -32,8 +31,20 @@ export async function getStaticProps(context) {
   };
 }
 export async function getStaticPaths() {
+  const jsonData = await fs.readFile(
+    path.join(process.cwd(), "public", "backend", "products.json")
+  );
+  const data = await JSON.parse(jsonData);
+  const pathArray = data.products.map((item) => {
+    return {
+      params: {
+        pid: item.id,
+      },
+    };
+  });
+
   return {
-    paths: [{ params: { pid: "1" } }],
+    paths: pathArray,
     fallback: false,
   };
 }

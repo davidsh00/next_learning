@@ -1,6 +1,7 @@
 import path from "path";
 import fs from "fs/promises";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 export default function Home(props) {
   const { products } = props;
   const [data, setData] = useState(products);
@@ -13,7 +14,16 @@ export default function Home(props) {
     <div>
       <ul>
         {data.map((product) => (
-          <li key={product.id}>{product.name}</li>
+          <li key={product.id}>
+            <Link
+              href={{
+                pathname: `/[pid]`,
+                query: { pid: product.id },
+              }}
+            >
+              {product.name}
+            </Link>
+          </li>
         ))}
       </ul>
     </div>
