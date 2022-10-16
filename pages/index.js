@@ -4,16 +4,11 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 export default function Home(props) {
   const { products } = props;
-  const [data, setData] = useState(products);
-  useEffect(() => {
-    fetch("/backend/productsNew.json")
-      .then((response) => response.json())
-      .then((data) => setData(data.products));
-  }, []);
+
   return (
     <div>
       <ul>
-        {data.map((product) => (
+        {products.map((product) => (
           <li key={product.id}>
             <Link
               href={{
